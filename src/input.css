@@ -1,0 +1,15 @@
+@import "tailwindcss";
+@theme {
+  --font-roboto: "Roboto";
+}
+@layer components {
+  .correct-answer {
+    @apply bg-green-400 relative after:absolute after:content-['✅'] after:right-1 after:top-3 text-green-100;
+  }
+  .wrong-answer {
+    @apply bg-red-200 text-red-100 relative after:absolute after:content-['❌'] after:right-1 after:top-3;
+  }
+  .options {
+    @apply w-full my-1 border py-3 px-4 rounded-md;
+  }
+}

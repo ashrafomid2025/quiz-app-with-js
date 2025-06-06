@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="app.js" defer></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../src/output.css" />
+  </head>
+  <body>
+    <div
+      class="h-screen overflow-y-scroll w-full font-roboto bg-blue-400 flex justify-center items-center"
+    >
+      <div class="h-fit w-[80%] p-4 bg-white rounded-md">
+        <div class="px-3 flex w-full justify-between">
+          <h1
+            class="relative after:w-[100px] after:h-px after:bg-black after:absolute after:content-[''] after:top-8 after:left-4"
+          >
+            JAVASCRIPT QUIZ
+          </h1>
+          <div class="inline-block h-12">
+            <h1
+              class="inline-block h-full p-4 text-sm rounded-md rounded-tr-none rounded-br-none bg-sky-300"
+            >
+              Time Left
+            </h1>
+            <!-- <a href="index.html#nt"></a> -->
+            <span
+              id="time-left"
+              class="p-4 inline-block -ml-2 h-full text-sm rounded-md rounded-tl-none rounded-bl-none text-white bg-black"
+              >3:45</span
+            >
+          </div>
+        </div>
+        <div id="divParent" class="w-[90%] px-3 flex flex-col gap-2">
+          <div id="divQuestion" class="my-3 text-xl font-bold">
+            <!-- h1 should be inserted -->
+          </div>
+          <!-- option -->
+
+          <div id="options">
+            <!-- h1 should be inserted -->
+          </div>
+        </div>
+        <div class="my-3 w-full">
+          <button
+            id="nextBtn"
+            class="py-3 float-end px-5 bg-blue-400 text-white rounded-md"
+          >
+            Next
+          </button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

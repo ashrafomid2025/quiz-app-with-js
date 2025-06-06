@@ -1,0 +1,212 @@
+const questions = [
+    {
+        number: 1,
+        question: "What does HTML stand for?",
+        options: [
+            "Hypertext Markup Language",
+            "Hyperlink and Text Markup Language",
+            "Home Tool Markup Language",
+            "Hyper Transfer Markup Language"
+        ],
+        correct: 0
+    },
+    {
+        number: 2,
+        question: "Which CSS property is used to change the text color of an element?",
+        options: [
+            "text-color",
+            "font-color",
+            "color",
+            "text-style"
+        ],
+        correct: 2
+    },
+    {
+        number: 3,
+        question: "What is the correct way to write a JavaScript array?",
+        options: [
+            "const colors = (1:'red', 2:'green', 3:'blue')",
+            "const colors = ['red', 'green', 'blue']",
+            "const colors = 'red', 'green', 'blue'",
+            "const colors = {1:'red', 2:'green', 3:'blue'}"
+        ],
+        correct: 1
+    },
+    {
+        number: 4,
+        question: "Which HTML tag is used to link an external JavaScript file?",
+        options: [
+            "script",
+            "javascript",
+            "js",
+            "link"
+        ],
+        correct: 0
+    },
+    {
+        number: 5,
+        question: "What does CSS stand for?",
+        options: [
+            "Computer Style Sheets",
+            "Creative Style Sheets",
+            "Cascading Style Sheets",
+            "Colorful Style Sheets"
+        ],
+        correct: 2
+    },
+    {
+        number: 6,
+        question: "Which method is used to select an element by its ID in JavaScript?",
+        options: [
+            "document.querySelector()",
+            "document.getElementById()",
+            "document.getElementByClass()",
+            "document.findElement()"
+        ],
+        correct: 1
+    },
+    {
+        number: 7,
+        question: "What is the purpose of the 'alt' attribute in an HTML image tag?",
+        options: [
+            "To specify alternative text when the image cannot be displayed",
+            "To add a caption to the image",
+            "To link the image to another page",
+            "To style the image"
+        ],
+        correct: 0
+    },
+    {
+        number: 8,
+        question: "Which of these is NOT a JavaScript framework or library?",
+        options: [
+            "React",
+            "Angular",
+            "Vue",
+            "CSS"
+        ],
+        correct: 3
+    },
+    {
+        number: 9,
+        question: "What does the 'DOM' stand for in JavaScript?",
+        options: [
+            "Data Object Model",
+            "Document Object Model",
+            "Display Object Management",
+            "Digital Object Maker"
+        ],
+        correct: 1
+    },
+    {
+        number: 10,
+        question: "Which HTML5 tag is used for drawing graphics via JavaScript?",
+        options: [
+            "graphic",
+            "canvas",
+            "draw",
+            "svg"
+        ],
+        correct: 1
+    }
+];
+let wholeTime = 600000;
+const timer = setInterval(()=>{
+let timeLeft = document.getElementById("time-left");
+
+wholeTime = wholeTime - 1000; 
+const getMinute = Math.floor((wholeTime/1000/60) % 60);
+const getSeconds =Math.floor((wholeTime/1000)% 60);
+timeLeft.textContent = getMinute +":" +getSeconds;
+if(wholeTime<=0){
+    clearInterval(timer);
+    return;
+}
+},1000);
+
+let POINT = 0;
+const nextBtn = document.getElementById("nextBtn");
+let indexNumber = 0;
+const divParent =  document.getElementById("divParent");
+function firstQuestion(){
+const question = document.createElement("h1");
+   question.textContent= questions[indexNumber].number +". "+ questions[indexNumber].question;
+   const divQ =  document.getElementById("divQuestion");
+   
+   divQ.append(question);
+   for(let option of questions[0].options){
+    const Divoption = document.createElement("div");
+    Divoption.innerHTML = `
+    <h1>
+    ${option}
+    </h1>`
+      Divoption.addEventListener("click",()=>{
+        if(option === questions[0].options[questions[0].correct]){
+            POINT += 2;
+
+            Divoption.classList.add("correct-answer");
+        }
+        else{
+            
+        }
+    })
+    Divoption.className = "options";
+    const divOptions = document.getElementById("options");
+
+
+    //  if(option === questions[0].options[questions[0].correct]){
+    //         POINT += 2;
+    //         Divoption.classList.add("correct-answer");
+    //     }
+    divOptions.append(Divoption);
+   }
+}
+firstQuestion();
+const Time = 600000;
+
+if(wholeTime > 0){
+nextBtn.addEventListener("click",()=>{
+    indexNumber++;
+       setInterval(() => {
+        
+      
+       if(indexNumber> 9){
+        divParent.innerHTML= "";
+        let result = POINT<10? "You Faild": POINT< 15? "You got the medium score": "Excellent";
+        divParent.innerHTML = 
+        `
+        <h1>
+        You got ${POINT} /20 ${result}
+        </h1>
+        `;
+    }
+     const divQ =  document.getElementById("divQuestion");
+     divQ.innerHTML = "";
+     const divOptions = document.getElementById("options");
+     divOptions.innerHTML = "";
+
+     const question = document.createElement("h1");
+    question.textContent= questions[indexNumber].number +". "+ questions[indexNumber].question;
+   
+   divQ.append(question);
+   for(let option of questions[indexNumber].options){
+    const Divoption = document.createElement("div");
+    Divoption.innerHTML = `
+    <h1>
+    ${option}
+    </h1>`
+    Divoption.className = "options";
+    Divoption.addEventListener("click",()=>{
+        if(option === questions[indexNumber].options[questions[indexNumber].correct]){
+            POINT += 2;
+            Divoption.classList.add("correct-answer");
+        }
+        else{
+            
+        }
+    })
+    divOptions.append(Divoption);
+    
+   }   
+})}
+), 1000};
