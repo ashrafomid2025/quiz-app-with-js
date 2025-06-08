@@ -110,103 +110,88 @@ const questions = [
         correct: 1
     }
 ];
-let wholeTime = 600000;
-const timer = setInterval(()=>{
-let timeLeft = document.getElementById("time-left");
+// ... (your questions array remains the same)
 
-wholeTime = wholeTime - 1000; 
-const getMinute = Math.floor((wholeTime/1000/60) % 60);
-const getSeconds =Math.floor((wholeTime/1000)% 60);
-timeLeft.textContent = getMinute +":" +getSeconds;
-if(wholeTime<=0){
-    clearInterval(timer);
-    return;
+let wholeTime = 600000; // 10 minutes in milliseconds
+let timer;
+let quizActive = true; // Flag to track if quiz is still active
+
+function startTimer() {
+    timer = setInterval(() => {
+        let timeLeft = document.getElementById("time-left");
+        wholeTime = wholeTime - 1000; 
+        const getMinute = Math.floor((wholeTime/1000/60) % 60);
+        const getSeconds = Math.floor((wholeTime/1000) % 60);
+        timeLeft.textContent = `${getMinute}:${getSeconds < 10 ? '0' : ''}${getSeconds}`;
+        
+        if(wholeTime <= 0) {
+            clearInterval(timer);
+            quizActive = false;
+            console.log("Time is up!");
+            endQuiz("Time is up!");
+        }
+    }, 1000);
 }
-},1000);
+
+startTimer(); // Start the timer when the page loads
 
 let POINT = 0;
 const nextBtn = document.getElementById("nextBtn");
 let indexNumber = 0;
-const divParent =  document.getElementById("divParent");
-function firstQuestion(){
-const question = document.createElement("h1");
-   question.textContent= questions[indexNumber].number +". "+ questions[indexNumber].question;
-   const divQ =  document.getElementById("divQuestion");
-   
-   divQ.append(question);
-   for(let option of questions[0].options){
-    const Divoption = document.createElement("div");
-    Divoption.innerHTML = `
-    <h1>
-    ${option}
-    </h1>`
-      Divoption.addEventListener("click",()=>{
-        if(option === questions[0].options[questions[0].correct]){
-            POINT += 2;
+const divParent = document.getElementById("divParent");
 
-            Divoption.classList.add("correct-answer");
-        }
-        else{
-            
-        }
-    })
-    Divoption.className = "options";
-    const divOptions = document.getElementById("options");
-
-
-    //  if(option === questions[0].options[questions[0].correct]){
-    //         POINT += 2;
-    //         Divoption.classList.add("correct-answer");
-    //     }
-    divOptions.append(Divoption);
-   }
+function endQuiz(message) {
+    divParent.innerHTML= "";
+    let result = POINT < 10 ? "You Failed" : POINT < 15 ? "You got the medium score" : "Excellent";
+    divParent.innerHTML = `
+        <h1>${message}</h1>
+        <h1>You got ${POINT} /20 ${result}</h1>
+    `;
 }
-firstQuestion();
-const Time = 600000;
 
-if(wholeTime > 0){
-nextBtn.addEventListener("click",()=>{
-    indexNumber++;
-       setInterval(() => {
-        
-      
-       if(indexNumber> 9){
-        divParent.innerHTML= "";
-        let result = POINT<10? "You Faild": POINT< 15? "You got the medium score": "Excellent";
-        divParent.innerHTML = 
-        `
-        <h1>
-        You got ${POINT} /20 ${result}
-        </h1>
-        `;
-    }
-     const divQ =  document.getElementById("divQuestion");
-     divQ.innerHTML = "";
-     const divOptions = document.getElementById("options");
-     divOptions.innerHTML = "";
-
-     const question = document.createElement("h1");
-    question.textContent= questions[indexNumber].number +". "+ questions[indexNumber].question;
-   
-   divQ.append(question);
-   for(let option of questions[indexNumber].options){
-    const Divoption = document.createElement("div");
-    Divoption.innerHTML = `
-    <h1>
-    ${option}
-    </h1>`
-    Divoption.className = "options";
-    Divoption.addEventListener("click",()=>{
-        if(option === questions[indexNumber].options[questions[indexNumber].correct]){
-            POINT += 2;
-            Divoption.classList.add("correct-answer");
-        }
-        else{
-            
-        }
-    })
-    divOptions.append(Divoption);
+function displayQuestion(index) {
+    if (!quizActive) return; // Don't show questions if time is up
     
-   }   
-})}
-), 1000};
+    const divQ = document.getElementById("divQuestion");
+    const divOptions = document.getElementById("options");
+    
+    divQ.innerHTML = "";
+    divOptions.innerHTML = "";
+
+    const question = document.createElement("h1");
+    question.textContent = questions[index].number + ". " + questions[index].question;
+    divQ.append(question);
+    
+    for(let option of questions[index].options) {
+        const Divoption = document.createElement("div");
+        Divoption.innerHTML = `<h1>${option}</h1>`;
+        Divoption.className = "options";
+        
+        Divoption.addEventListener("click", () => {
+            if (!quizActive) return; // Don't process answers if time is up
+            
+            if(option === questions[index].options[questions[index].correct]) {
+                POINT += 2;
+                Divoption.classList.add("correct-answer");
+            } else {
+                Divoption.classList.add("wrong-answer");
+            }
+        });
+        
+        divOptions.append(Divoption);
+    }
+}
+
+// Initial question display
+displayQuestion(0);
+
+nextBtn.addEventListener("click", () => {
+    if (!quizActive) return; // Don't allow navigation if time is up
+    
+    indexNumber++;
+    if(indexNumber > 9) {
+        endQuiz("Quiz completed!");
+    } else {
+        displayQuestion(indexNumber);
+    }
+});
