@@ -150,7 +150,7 @@ function endQuiz(message) {
 }
 
 function displayQuestion(index) {
-    if (!quizActive) return; // Don't show questions if time is up
+    if (!quizActive) return; 
     
     const divQ = document.getElementById("divQuestion");
     const divOptions = document.getElementById("options");
@@ -168,7 +168,7 @@ function displayQuestion(index) {
         Divoption.className = "options";
         
         Divoption.addEventListener("click", () => {
-            if (!quizActive) return; // Don't process answers if time is up
+            if (!quizActive) return; 
             
             if(option === questions[index].options[questions[index].correct]) {
                 POINT += 2;
@@ -182,7 +182,7 @@ function displayQuestion(index) {
     }
 }
 
-// Initial question display
+
 displayQuestion(0);
 
 nextBtn.addEventListener("click", () => {
