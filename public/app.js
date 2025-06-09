@@ -186,11 +186,11 @@ function displayQuestion(index) {
 displayQuestion(0);
 
 nextBtn.addEventListener("click", () => {
-    if (!quizActive) return; // Don't allow navigation if time is up
+    if (!quizActive) return; 
     
     indexNumber++;
     if(indexNumber > 9) {
-        endQuiz("Quiz completed!");
+        endQuiz("امتحان تمام شد");
     } else {
         displayQuestion(indexNumber);
     }
