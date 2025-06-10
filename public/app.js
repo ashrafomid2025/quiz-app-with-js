@@ -110,11 +110,11 @@ const questions = [
         correct: 1
     }
 ];
-// ... (your questions array remains the same)
 
-let wholeTime = 600000; // 10 minutes in milliseconds
+
+let wholeTime = 600000; 
 let timer;
-let quizActive = true; // Flag to track if quiz is still active
+let quizActive = true; 
 
 function startTimer() {
     timer = setInterval(() => {
