@@ -133,7 +133,7 @@ function startTimer() {
     }, 1000);
 }
 
-startTimer(); // Start the timer when the page loads
+startTimer(); 
 
 let POINT = 0;
 const nextBtn = document.getElementById("nextBtn");
