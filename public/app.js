@@ -142,7 +142,7 @@ const divParent = document.getElementById("divParent");
 
 function endQuiz(message) {
     divParent.innerHTML= "";
-    let result = POINT < 10 ? "You Failed" : POINT < 15 ? "You got the medium score" : "Excellent";
+    let result = POINT < 10 ? "You Failed" : POINT < 15 ? "You got the med score" : "Excellent";
     divParent.innerHTML = `
         <h1>${message}</h1>
         <h1>You got ${POINT} /20 ${result}</h1>
